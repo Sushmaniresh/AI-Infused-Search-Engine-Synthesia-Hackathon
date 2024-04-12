@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #6a0dad; /* Purple background color */
+            color: #fff; /* White text color */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 90%;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        h1 {
+            color: #6a0dad; /* Purple text color */
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+
+        ul {
+            padding-left: 0;
+            list-style-type: none;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #6a0dad; /* Purple link color */
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #450677; /* Darker shade of purple on hover */
+        }
+
+        .search-container {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .search-container input[type=text] {
+            width: 50%;
+            padding: 10px;
+            margin: 10px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .search-container input[type=submit] {
+            background-color: #6a0dad; /* Purple background color */
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .search-container input[type=submit]:hover {
+            background-color: #450677; /* Darker shade of purple on hover */
+        }
+
+        /* Set the color of summary and URLs to black */
+        .summary {
+            color: #000; /* Black text color */
+        }
+
+        .urls a {
+            color: #007bff; /* Blue link color */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="search-container">
+        <form action="/process_query" method="POST">
+            <input type="text" name="query" placeholder="Enter your search query" required>
+            <input type="submit" value="Search">
+        </form>
+    </div>
+
+    <h1>Look What I found for {{ query }}!!!!!!</h1>
+    
+    <h2>Summary</h2>
+    <ul class="summary"> <!-- Add class to target summary -->
+        {% for index in range(0, refined_content.split('\n')|length, 2) %}
+            <li>{{ refined_content.split('\n')[index] }}</li>
+            {% if index + 1 < refined_content.split('\n')|length %}
+                <li>{{ refined_content.split('\n')[index + 1] }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    
+    <h2>You can also catch up with!!!!!!</h2>
+    <ul class="urls"> <!-- Add class to target URLs -->
+        {% for url in data_url %}
+            <li><a href="{{ url }}">{{ url }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+</html>
